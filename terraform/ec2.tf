@@ -44,14 +44,14 @@ resource "aws_security_group" "ec2_security_group" {
 }
 
 # https://stackoverflow.com/questions/49743220/how-to-create-an-ssh-key-in-terraform
-resource "tls_private_key" "example" {
+resource "tls_private_key" "this" {
   algorithm = "RSA"
   rsa_bits  = 2048
 }
 
 resource "aws_key_pair" "generated_key" {
   key_name   = var.key_name
-  public_key = tls_private_key.example.public_key_openssh
+  public_key = tls_private_key.this.public_key_openssh
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
@@ -80,6 +80,6 @@ resource "aws_instance" "ec2_instance" {
 }
 
 output "private_key" {
-  value     = tls_private_key.example.private_key_pem
+  value     = tls_private_key.this.private_key_pem
   sensitive = true
 }
