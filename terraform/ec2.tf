@@ -77,6 +77,13 @@ resource "aws_instance" "ec2_instance" {
     key_name                = aws_key_pair.generated_key.key_name
     subnet_id               = aws_default_subnet.default_subnet.id
     vpc_security_group_ids  = [aws_security_group.ec2_security_group.id]
+
+  # https://stackoverflow.com/questions/67210801/aws-instance-changing-volume-size
+  root_block_device {
+    volume_size = 32
+    volume_type = "gp3"
+    encrypted   = true
+  }
 }
 
 /*
