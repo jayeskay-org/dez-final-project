@@ -79,7 +79,35 @@ resource "aws_instance" "ec2_instance" {
     vpc_security_group_ids  = [aws_security_group.ec2_security_group.id]
 }
 
+/*
+The below were useful references:
+- https://www.pulumi.com/ai/answers/o6ks7V7Wzyf2vGmjn96YHr/creating-an-aws-ec2-elastic-ip-with-terraform
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip_association
+*/
+
+# Create an EIP
+resource "aws_eip" "this" {
+  instance = aws_instance.ec2_instance.id
+  domain   = "vpc"
+
+  tags = {
+    Name = "elastic ip"
+  }
+}
+
+# Associate the EIP with the instance
+resource "aws_eip_association" "this" {
+  instance_id   = aws_instance.ec2_instance.id
+  allocation_id = aws_eip.this.id
+}
+
 output "private_key" {
   value     = tls_private_key.this.private_key_pem
   sensitive = true
+}
+
+output "eip" {
+  value = aws_eip.this.public_ip
+  description = "The Elastic IP address (EIP) associated with the EC2 instance."
 }
