@@ -10,8 +10,8 @@ resource "aws_iam_role" "snowflake_role" {
       {
         "Action": "sts:AssumeRole",
         "Effect": "Allow",
-        "Principal": {"AWS": "${data.aws_caller_identity.current.account_id}"},
-        "Condition": {"StringEquals": {"sts:ExternalId": "0000"}}
+        "Principal": {"AWS": "${var.snowflake_role_arn}"},
+        "Condition": {"StringEquals": {"sts:ExternalId": "${var.snowflake_role_external_id}"}}
       }
     ]
   }
