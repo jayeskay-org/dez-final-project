@@ -23,7 +23,7 @@ variable "project" {
 variable "local_ip_address" {
   description = "IP address of local machine."
   type = list(string)
-  default = ["72.216.124.122/32"]
+  default = ["72.216.124.122/32", "37.210.197.19/32"]
 }
 
 variable "key_name" {
