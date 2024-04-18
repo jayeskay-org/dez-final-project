@@ -1,0 +1,12 @@
+
+version: 2
+
+models:
+  - name: stg_coal_consumption
+    description: "Breakout of coal consumption by location and source"
+
+  - name: stg_electricity_breakout
+    description: "Breakout of electricity capability by source"
+
+  - name: stg_electricity_coal
+    description: "Electricity capability, derived from coal"
